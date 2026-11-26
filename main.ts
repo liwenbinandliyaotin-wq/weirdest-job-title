@@ -16,7 +16,10 @@ import { fileURLToPath } from 'node:url';
 function main() {
   const here = dirname(fileURLToPath(import.meta.url));
   const text = readFileSync(join(here, 'entry.txt'), 'utf8');
-  if (text.trim().length === 0 || text.length > 60) {
+  if (text.trim().length === 0) {
+    throw new Error('entry.txt is blank, nothing to write');
+  }
+  if (text.length > 60) {
     throw new Error(`entry.txt must be 1-60 characters, got ${text.length}`);
   }
   const targetDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
